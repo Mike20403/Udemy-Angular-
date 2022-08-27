@@ -1,0 +1,61 @@
+<h2 class="mt-5 text-warning">Add New Recipe </h2>
+<form class="form-group" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+	
+		<button type="submit" class="btn btn-success">Save</button>
+
+		<button type="button" class="btn btn-danger" (click)="onCancel()" style="margin-left: 10px;" (click)="onCancel()">Cancel</button>
+	
+  <div class="mb-3">
+    <label for="recipe-title" class="form-label">Recipe's Title</label>
+    <input type="text" class="form-control" id="recipe-title" placeholder="Recipe's title" formControlName="recipe-title">
+    <div [ngClass]="{'d-block':recipeForm.get('recipe-title')!.valid && recipeForm.get('recipe-title')!.touched}"class="valid-feedback">Valid.</div>
+    <div [ngClass]="{'d-block':!recipeForm.get('recipe-title')!.valid && recipeForm.get('recipe-title')!.touched}" class="invalid-feedback">Please fill in valid values!</div>
+  </div>
+  <div class="mb-3">
+    <label for="recipe-descript" class="form-label">Recipe's Description</label>
+    <!-- <input #descript type="text" class="form-control" id="recipe-descript" placeholder="Recipe's desscription" required> -->
+    <textarea class="form-control" name="recipe-descript" id="recipe-descript" rows="6" formControlName="recipe-descript"></textarea>
+     <div [ngClass]="{'d-block':recipeForm.get('recipe-descript')!.valid && recipeForm.get('recipe-descript')!.touched}"class="valid-feedback">Valid.</div>
+    <div [ngClass]="{'d-block':!recipeForm.get('recipe-descript')!.valid && recipeForm.get('recipe-descript')!.touched}" class="invalid-feedback">Please fill in valid values!</div>
+  </div>
+  <div class="mb-3">
+    <label for="imagePath">Image URL:</label>
+    <input type="text" id="imagePath" class="form-control" formControlName="imagePath" #imgPath>
+     <div [ngClass]="{'d-block':recipeForm.get('imagePath')!.valid && recipeForm.get('imagePath')!.touched}"class="valid-feedback">Valid.</div>
+    <div [ngClass]="{'d-block':!recipeForm.get('imagePath')!.valid && recipeForm.get('imagePath')!.touched}" class="invalid-feedback">Please fill in valid values!</div>
+  </div>
+  <div class="mb-3">
+    <img [src]="imgPath.value" alt="" class="img-fluid">
+  </div>
+  <!-- <div class="mb-3">
+    <label for="formFileSm" class="form-label">Recipe's image file:</label>
+    <input #file class="form-control form-control-sm" id="formFileSm" type="file" (change)="onFileUpload($event)" required>
+    <div class="valid-feedback">Valid.</div>
+    <div class="invalid-feedback">File hasn't been uploaded!</div>
+  </div> -->
+  <div class="row mb-3" formArrayName="ingredients">
+  	<h6>Recipe's Ingredients:</h6>
+    <div class="row mb-3" *ngFor="let ingredient of formControls;let id = index" [formGroupName]="id">
+      <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="name">
+      	<div [ngClass]="{'d-inline-block':formControls[id].valid && formControls[id].touched}"class="valid-feedback">Valid.</div>
+    <div [ngClass]="{'d-inline-block':!formControls[id].valid && formControls[id].touched}" class="invalid-feedback">Please fill in valid values!</div>
+      </div>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" formControlName="amount">
+      </div>
+      <div class="col-sm-2">
+        <button class="btn btn-danger"(click)="onDeleteIngredient(id)">X</button>
+      </div>
+    </div>
+  </div>
+  <button id="button" class="btn btn-success" type="button" (click)="onAddIngredient()">Add Ingredient</button>
+ 
+  <!-- <div class="row">
+    <div class="col">
+      <img *ngIf="url" [src]="url" style="width: 400px; height:400px; background-size: contain; margin-bottom: 20px;" alt="">
+    </div>
+    <div *ngIf="url" class="col m-auto">
+    </div>
+  </div> -->
+</form>
